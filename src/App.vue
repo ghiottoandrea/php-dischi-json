@@ -2,35 +2,31 @@
 import axios from 'axios';
 
 export default {
-    name: 'App',
-    data() {
-        return {
-            records: []
-        }
-    },
-    mounted() {
-        this.myRequest();
-    },
-    methods: {
-        myRequest() {
-            axios.get('server.php')
-            .then((response) => {
-                this.records = response.data;
-                console.log(this.records);
-            })
-            .catch((error) => {
-                console.error('Si è verificato un errore:', error);
-            });
-        },
-    }
-}
+  data() {
+    return {
+      records: []
+    };
+  },
+  mounted() {
+    // Effettua la chiamata Axios al backend PHP all'avvio del componente
+    axios.get('server.php')
+      .then(response => {
+        this.records = response.data;
+        console.log(this.records);
+      })
+      .catch(error => {
+        console.error('Errore durante il recupero dei dati:', error);
+      });
+  }
+};
 </script>
 
 <template>
-    <!-- Inserisci qui il tuo markup HTML -->
+  <div>
+    <div v-for="record in records" :key="record.id">
+      <h2>{{ record.title }}</h2>
+      <p>{{ record.author }}</p>
+    </div>
+  </div>
 </template>
-
-<style>
-    /* Aggiungi qui i tuoi stili CSS */
-</style>
 
